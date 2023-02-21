@@ -7,11 +7,11 @@ public class Producto {
         this.tipo = tipo;
     }
 
-    public Identificador getId() {
-        return id;
+    public Integer getId() {
+        return id.getId();
     }
 
-    public void setId(Identificador id) {
-        this.id = id;
+    public String getTipo() {
+        return tipo;
     }
 }

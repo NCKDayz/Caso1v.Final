@@ -1,8 +1,8 @@
 public class Proceso extends Thread {
     private int id = 0;
-    static private Buffer bufferEtapa1;
-    static private Buffer bufferEtapa2;
-    static private Buffer bufferEtapaFinal;
+    private Buffer bufferEtapa1;
+    private Buffer bufferEtapa2;
+    private Buffer bufferEtapaFinal;
     private String tipo;
     static private int cantidadProductos;
 
@@ -34,7 +34,41 @@ public class Proceso extends Thread {
         }
     }
 
+    private void etapa2()
+    {
+        while (bufferEtapa1.getTamanio() > 0)
+        {
+            if (tipo == "naranja")
+            {
+                Producto productoExtraido;
+                while((productoExtraido = bufferEtapa1.extraerNaranja()) == null)
+                {
+                    Thread.yield();
+                }
+                bufferEtapa2.almacenarNaranja(productoExtraido);
+            }
+            else if (tipo == "azul")
+            {
+                Producto productoExtraido;
+                productoExtraido = bufferEtapa1.extraerAzul();
+                bufferEtapa2.almacenarAzul(productoExtraido);
+            }
+            else
+            {
+                System.out.println("ERROR: Tipo de producto no reconocido");
+            }
+        }
+    }
+
+    private void etapa3()
+    {
+        
+    }
+
     public void run() {
         etapa1();
+        etapa2();
+        System.out.println("FIN PROCESO, tamaño del buffer " + tipo +" 1 es: " + bufferEtapa1.getTamanio());
+        System.out.println("FIN PROCESO, tamaño del buffer " + tipo +" 2 es: " + bufferEtapa2.getTamanio());
     }
 }
