@@ -42,7 +42,21 @@ public class Buffer {
     }
 
     public synchronized void almacenarRojo(Producto p) {
-        
+        buff.add(p);
+        System.out.println("FIN ALMACENAR ROJO - Buffer rojo es " + buff.size());
+    }
+
+    public synchronized Producto extraerRojo() {
+
+        System.out.println("EXTRAER INICIO - size del buffer es: " + buff.size());
+            while (buff.size() == 0)
+            {
+                //No se hace nada porque es espera activa.
+            }
+            Producto i = buff.remove(0);
+            System.out.println("Buffer no vacio, Producto " + i.getTipo() + " " + i.getId() + " extraido");
+            System.out.println("EXTRAER FIN - size del buffer es: " + buff.size());
+            return i ;
     }
 
     public synchronized Producto extraerNaranja() {

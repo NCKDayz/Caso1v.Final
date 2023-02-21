@@ -62,13 +62,23 @@ public class Proceso extends Thread {
 
     private void etapa3()
     {
-        
+        while (bufferEtapa2.getTamanio() > 0)
+        {
+            Producto productoExtraido;
+            while((productoExtraido = bufferEtapa2.extraerRojo()) == null)
+            {
+                //No se hace nada porque es espera activa.
+            }
+            bufferEtapaFinal.almacenarRojo(productoExtraido);
+        }
     }
 
     public void run() {
         etapa1();
         etapa2();
+        etapa3();
         System.out.println("FIN PROCESO, tamaño del buffer " + tipo +" 1 es: " + bufferEtapa1.getTamanio());
         System.out.println("FIN PROCESO, tamaño del buffer " + tipo +" 2 es: " + bufferEtapa2.getTamanio());
+        System.out.println("FIN PROCESO, tamaño del buffer rojo 3 es: " + bufferEtapaFinal.getTamanio());
     }
 }
